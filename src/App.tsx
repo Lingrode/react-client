@@ -1,11 +1,15 @@
 import "./App.css";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { Button } from "./components/ui/button";
 
 function App() {
   return (
-    <Button variant="destructive" size="lg">
-      Button
-    </Button>
+    <>
+      <ThemeToggle />
+      <Button variant="destructive" size="lg">
+        Button
+      </Button>
+    </>
   );
 }
 
