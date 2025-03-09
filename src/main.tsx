@@ -1,21 +1,60 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 
-import App from "./App.tsx";
 import ThemeProvider from "./components/ThemeProvider.tsx";
+import { Layout } from "./components/Layout/index.tsx";
+
+import { Auth } from "./pages/Auth.tsx";
+import { Posts } from "./pages/Posts.tsx";
+import { CurrentPost } from "./pages/CurrentPost.tsx";
+import { UserProfile } from "./pages/UserProfile.tsx";
+import { Followers } from "./pages/Followers.tsx";
+import { Following } from "./pages/Following.tsx";
+
 import { store } from "./redux/store.ts";
 import "./index.css";
+
+const router = createBrowserRouter([
+  {
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <Posts />,
+      },
+      {
+        path: "posts/:id",
+        element: <CurrentPost />,
+      },
+      {
+        path: "users/:id",
+        element: <UserProfile />,
+      },
+      {
+        path: "followers",
+        element: <Followers />,
+      },
+      {
+        path: "following",
+        element: <Following />,
+      },
+    ],
+  },
+]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </StrictMode>
 );

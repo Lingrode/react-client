@@ -8,7 +8,7 @@ export const Layout = () => {
     <div className="[--header-height:calc(theme(spacing.14))]">
       <SidebarProvider className="flex flex-col">
         <Header />
-        <div className="flex flex-1">
+        <div className="flex flex-1 px-4">
           <NavBar />
           <SidebarInset>
             <Outlet />

@@ -3,35 +3,11 @@ import { Link } from "react-router";
 import { Menu, MoveRight, SidebarIcon, X } from "lucide-react";
 
 import { Button } from "../ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "../ui/navigation-menu";
-import { ThemeToggle } from "../ThemeToggle";
+import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
 import { useSidebar } from "../ui/sidebar";
+import { ThemeToggle } from "../ThemeToggle";
 
 export const Header = () => {
-  const navItems = [
-    {
-      title: "Posts",
-      href: "/",
-      description: "",
-    },
-    {
-      title: "Followings",
-      href: "following",
-      description: "",
-    },
-    {
-      title: "Followers",
-      href: "followers",
-      description: "",
-    },
-  ];
-
   const [isOpen, setIsOpen] = useState(false);
   const { toggleSidebar } = useSidebar();
 
@@ -50,45 +26,12 @@ export const Header = () => {
               >
                 <SidebarIcon />
               </Button>
-              {navItems.map((item) => (
-                <NavigationMenuItem key={item.title}>
-                  {item.href ? (
-                    <>
-                      <Button variant="ghost" asChild>
-                        <Link to={item.href}>{item.title}</Link>
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <NavigationMenuTrigger className="font-medium text-sm">
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent className="!w-[450px] p-4">
-                        <div className="flex flex-col lg:grid grid-cols-2 gap-4">
-                          <div className="flex flex-col h-full justify-between">
-                            <div className="flex flex-col">
-                              <p className="text-base">{item.title}</p>
-                              <p className="text-muted-foreground text-sm">
-                                {item.description}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col text-sm h-full justify-end"></div>
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  )}
-                </NavigationMenuItem>
-              ))}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="flex lg:justify-center">
-          <p className="font-semibold">Network Social</p>
-        </div>
         <div className="flex justify-end w-full gap-4">
           <Button variant="outline">Sign in</Button>
-          <Button>Get started</Button>
+          <Button>Sign up</Button>
           <ThemeToggle />
         </div>
         <div className="flex w-12 shrink lg:hidden items-end justify-end">
