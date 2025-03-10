@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Bookmark, Command, FileText, Users } from "lucide-react";
+import { Bookmark, Command, FileText, SidebarIcon, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,8 +9,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router";
+import { Button } from "../ui/button";
 
 const data = [
   {
@@ -31,9 +33,9 @@ const data = [
 ];
 
 export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { toggleSidebar } = useSidebar();
   return (
     <Sidebar
-      className="top-[--header-height] !h-[calc(100svh-var(--header-height))]"
       style={{
         top: "var(--header-height)",
         height: "calc(100svh - var(--header-height))",
@@ -42,7 +44,7 @@ export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex items-center">
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
@@ -53,6 +55,14 @@ export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
               </a>
             </SidebarMenuButton>
+            <Button
+              className="h-8 w-8 md:hidden"
+              variant="ghost"
+              size="icon"
+              onClick={toggleSidebar}
+            >
+              <SidebarIcon />
+            </Button>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
