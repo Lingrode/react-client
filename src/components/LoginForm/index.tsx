@@ -51,6 +51,8 @@ export const LoginForm = ({ setSelected }: Props) => {
 
     try {
       await login(values).unwrap();
+      await triggerCurrentQuery();
+      navigate("/");
       form.reset();
     } catch (error) {
       if (hasErrorField(error)) {
