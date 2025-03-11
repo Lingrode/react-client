@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoginForm } from "@/components/LoginForm";
+import { RegisterForm } from "@/components/RegisterForm";
 
 export const Auth = () => {
   const [selected, setSelected] = useState("login");
@@ -23,7 +24,9 @@ export const Auth = () => {
               <TabsContent value="login">
                 <LoginForm setSelected={setSelected} />
               </TabsContent>
-              <TabsContent value="sign-up">Sign Up</TabsContent>
+              <TabsContent value="sign-up">
+                <RegisterForm setSelected={setSelected} />
+              </TabsContent>
             </CardHeader>
           </Card>
         </Tabs>

@@ -18,44 +18,47 @@ import { Button } from "../ui/button";
 import { ErrorMessage } from "../ErrorMessage";
 import { hasErrorField } from "@/utils/hasErrorField";
 
-import { useLazyCurrentQuery, useLoginMutation } from "@/redux/apis/userApi";
+import { useRegisterMutation } from "@/redux/apis/userApi";
 
 type Props = {
   setSelected: (value: string) => void;
 };
 
 const formSchema = z.object({
+  name: z.string().min(4, { message: "Name must be at leat 4 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   password: z
     .string()
     .min(3, { message: "Password must be at least 3 characters." }),
+  // .regex(/[A-Z]/, {
+  //   message: "Password must contain at least one uppercase letter",
+  // })
+  // .regex(/[0-9]/, { message: "Password must contain at least one number" }),
 });
 
-export const LoginForm = ({ setSelected }: Props) => {
+export const RegisterForm = ({ setSelected }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const [login, { isLoading }] = useLoginMutation();
-  const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
   const [error, setError] = useState("");
-  const [triggerCurrentQuery] = useLazyCurrentQuery();
-  console.log(error);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setError("");
 
     try {
-      await login(values).unwrap();
+      await register(values).unwrap();
+      setSelected("login");
       form.reset();
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);
-        form.setValue("password", "");
       }
     }
   };
@@ -65,19 +68,25 @@ export const LoginForm = ({ setSelected }: Props) => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="mb-5">
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        ></FormField>
+        <FormField
+          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem className="mb-5">
               <FormLabel>E-mail</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="shadcn@example.com"
-                  {...field}
-                  onChange={(e) => {
-                    setError("");
-                    field.onChange(e);
-                  }}
-                />
+                <Input placeholder="shadcn@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,11 +120,11 @@ export const LoginForm = ({ setSelected }: Props) => {
         <ErrorMessage error={error} />
 
         <p className="text-center mt-10">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <a
             href="#"
             className="underline underline-offset-4 cursor-pointer"
-            onClick={() => setSelected("sign-up")}
+            onClick={() => setSelected("login")}
           >
             Sign up
           </a>

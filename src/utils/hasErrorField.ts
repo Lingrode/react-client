@@ -7,6 +7,6 @@ export function hasErrorField(
     "data" in err &&
     typeof err.data === "object" &&
     err.data !== null &&
-    "err" in err.data
+    "error" in err.data
   );
 }
