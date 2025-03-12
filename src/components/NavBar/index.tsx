@@ -1,5 +1,8 @@
 import * as React from "react";
 import { Bookmark, Command, FileText, SidebarIcon, Users } from "lucide-react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router";
+
 import {
   Sidebar,
   SidebarContent,
@@ -11,8 +14,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
 import { Button } from "../ui/button";
+
+import { selectCurrent, selectIsAuthenticated } from "@/redux/user/selectors";
 
 const data = [
   {
@@ -34,6 +38,9 @@ const data = [
 
 export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { toggleSidebar } = useSidebar();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const current = useSelector(selectCurrent);
+
   return (
     <Sidebar
       style={{
@@ -51,7 +58,9 @@ export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Network Social</span>
+                  <span className="truncate font-semibold">
+                    {isAuthenticated ? current?.name : "Network Social"}
+                  </span>
                 </div>
               </a>
             </SidebarMenuButton>
