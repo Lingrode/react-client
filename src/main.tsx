@@ -15,6 +15,7 @@ import { Following } from "./pages/Following.tsx";
 
 import { store } from "./redux/store.ts";
 import "./index.css";
+import { AuthGuard } from "./components/AuthGuard/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
+        <AuthGuard>
+          <RouterProvider router={router} />
+        </AuthGuard>
       </ThemeProvider>
     </Provider>
   </StrictMode>

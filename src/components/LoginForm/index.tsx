@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -16,6 +15,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ErrorMessage } from "../ErrorMessage";
+import { LoadingSpinner } from "../Loader";
 import { hasErrorField } from "@/utils/hasErrorField";
 
 import { useLazyCurrentQuery, useLoginMutation } from "@/redux/apis/userApi";
@@ -44,14 +44,13 @@ export const LoginForm = ({ setSelected }: Props) => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [triggerCurrentQuery] = useLazyCurrentQuery();
-  console.log(error);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setError("");
 
     try {
       await login(values).unwrap();
-      await triggerCurrentQuery();
+      await triggerCurrentQuery().unwrap();
       navigate("/");
       form.reset();
     } catch (error) {
@@ -102,7 +101,7 @@ export const LoginForm = ({ setSelected }: Props) => {
         <Button className="w-full" type="submit" disabled={isLoading}>
           {isLoading ? (
             <>
-              <Loader2 className="animate-spin" />
+              <LoadingSpinner />
               Loading...
             </>
           ) : (
