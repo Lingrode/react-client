@@ -17,6 +17,7 @@ import {
 import { Button } from "../ui/button";
 
 import { selectCurrent, selectIsAuthenticated } from "@/redux/user/selectors";
+import { NavProfile } from "../NavProfile";
 
 const data = [
   {
@@ -49,32 +50,30 @@ export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }}
       {...props}
     >
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem className="flex items-center">
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+      {isAuthenticated && current ? null : (
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem className="flex items-center">
+              <SidebarMenuButton size="lg">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {isAuthenticated ? current?.name : "Network Social"}
-                  </span>
+                  <span className="truncate font-semibold">Network Social</span>
                 </div>
-              </a>
-            </SidebarMenuButton>
-            <Button
-              className="h-8 w-8 md:hidden"
-              variant="ghost"
-              size="icon"
-              onClick={toggleSidebar}
-            >
-              <SidebarIcon />
-            </Button>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+              </SidebarMenuButton>
+              <Button
+                className="h-8 w-8 md:hidden"
+                variant="ghost"
+                size="icon"
+                onClick={toggleSidebar}
+              >
+                <SidebarIcon />
+              </Button>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
+      )}
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
@@ -90,11 +89,10 @@ export function NavBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ))}
           </SidebarMenu>
         </SidebarGroup>
-        {/* <NavMain items={data.navMain} /> */}
-        {/* <NavProjects projects={data.projects} /> */}
-        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
-      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
+      <SidebarFooter>
+        <NavProfile />
+      </SidebarFooter>
     </Sidebar>
   );
 }

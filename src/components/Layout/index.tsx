@@ -13,12 +13,11 @@ export const Layout = () => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     navigate("/auth");
-  //   }
-
-  // }, []);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="[--header-height:calc(theme(spacing.14))]">
