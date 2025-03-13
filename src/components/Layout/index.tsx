@@ -6,11 +6,10 @@ import { Header } from "../Header";
 import { NavBar } from "../NavBar";
 import { SidebarInset, SidebarProvider } from "../ui/sidebar";
 
-import { selectIsAuthenticated, selectUser } from "@/redux/user/selectors";
+import { selectIsAuthenticated } from "@/redux/user/selectors";
 
 export const Layout = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectUser);
   const navigate = useNavigate();
 
   useEffect(() => {
