@@ -1,7 +1,9 @@
-export const formatToClientDate = (date?: Date) => {
+export const formatToClientDate = (date?: string | Date) => {
   if (!date) {
     return "";
   }
 
-  return new Date(date.toLocaleDateString());
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
+
+  return parsedDate.toLocaleDateString();
 };

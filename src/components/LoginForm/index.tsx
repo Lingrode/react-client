@@ -105,7 +105,7 @@ export const LoginForm = ({ setSelected }: Props) => {
               Loading...
             </>
           ) : (
-            "Submit"
+            "Login"
           )}
         </Button>
 
