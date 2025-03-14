@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router";
 import { MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react";
 
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Button } from "../ui/button";
 import { User } from "../User";
 import { LoadingSpinner } from "../Loader";
 import { MetaInfo } from "../MetaInfo";
@@ -22,6 +21,7 @@ import {
   useLazyGetPostByIdQuery,
 } from "@/redux/apis/postApi";
 import { selectCurrent } from "@/redux/user/selectors";
+import { hasErrorField } from "@/utils/hasErrorField";
 
 type Props = {
   avatarUrl: string;
@@ -60,7 +60,48 @@ export const PostCard = ({
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrent);
 
-  console.log(typeof createdAt);
+  const refetchPosts = async () => {
+    switch (cardFor) {
+      case "post":
+        await triggerGetAllPosts().unwrap();
+        break;
+      case "current-post":
+        await triggerGetAllPosts().unwrap();
+        break;
+      case "comment":
+        await triggerGetPostById(id).unwrap();
+        break;
+      default:
+        throw new Error("Wrong argument cardFor");
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      switch (cardFor) {
+        case "post":
+          await deletePost(id).unwrap();
+          await refetchPosts();
+          break;
+        case "current-post":
+          await deletePost(id).unwrap();
+          navigate("/");
+          break;
+        case "comment":
+          await deleteComment(id).unwrap();
+          await refetchPosts();
+          break;
+        default:
+          throw new Error("Wrong argument cardFor");
+      }
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
+    }
+  };
 
   return (
     <Card className="mb-4 shadow-md">
@@ -73,7 +114,7 @@ export const PostCard = ({
           />
         </Link>
         {authorId === currentUser?.id && (
-          <div className="cursor-pointer">
+          <div className="cursor-pointer" onClick={handleDeletePost}>
             {deletePostStatus.isLoading || deleteCommentStatus.isLoading ? (
               <LoadingSpinner />
             ) : (
