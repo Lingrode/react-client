@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
 import { useCurrentQuery } from "@/redux/apis/userApi";
-import { LoadingSpinner } from "../Loader";
+import { LoadingSpinner } from "@/components/Loader";
 
 export const AuthGuard = ({ children }: { children: JSX.Element }) => {
   const { isLoading } = useCurrentQuery();

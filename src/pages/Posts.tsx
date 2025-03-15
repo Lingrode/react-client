@@ -1,7 +1,6 @@
 import { CreatePost } from "@/components/CreatePost";
 import { PostCard } from "@/components/PostCard";
 import { useGetAllPostsQuery } from "@/redux/apis/postApi";
-import React from "react";
 
 export const Posts = () => {
   const { data } = useGetAllPostsQuery();

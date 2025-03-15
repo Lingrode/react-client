@@ -1,12 +1,11 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { CardDescription, CardTitle } from "../ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import { BASE_URL } from "@/constants";
 
 type Props = {
   name: string;
   avatarUrl: string;
-  description?: string | Date;
+  description?: string;
 };
 
 export const User = ({ name, avatarUrl, description }: Props) => {

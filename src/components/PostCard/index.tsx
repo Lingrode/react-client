@@ -3,11 +3,16 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react";
 
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { User } from "../User";
-import { LoadingSpinner } from "../Loader";
-import { MetaInfo } from "../MetaInfo";
-import { ErrorMessage } from "../ErrorMessage";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { User } from "@/components/User";
+import { LoadingSpinner } from "@/components/Loader";
+import { MetaInfo } from "@/components/MetaInfo";
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { formatToClientDate } from "@/utils/formatToClientDate";
 
 import { useDeleteCommentMutation } from "@/redux/apis/commentApi";

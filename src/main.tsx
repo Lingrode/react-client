@@ -3,19 +3,19 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 
-import ThemeProvider from "./components/ThemeProvider.tsx";
-import { Layout } from "./components/Layout/index.tsx";
+import ThemeProvider from "@/components/ThemeProvider.tsx";
+import { Layout } from "@/components/Layout";
+import { AuthGuard } from "@/components/AuthGuard";
 
-import { Auth } from "./pages/Auth.tsx";
-import { Posts } from "./pages/Posts.tsx";
-import { CurrentPost } from "./pages/CurrentPost.tsx";
-import { UserProfile } from "./pages/UserProfile.tsx";
-import { Followers } from "./pages/Followers.tsx";
-import { Following } from "./pages/Following.tsx";
+import { Auth } from "@/pages/Auth.tsx";
+import { Posts } from "@/pages/Posts.tsx";
+import { CurrentPost } from "@/pages/CurrentPost.tsx";
+import { UserProfile } from "@/pages/UserProfile.tsx";
+import { Followers } from "@/pages/Followers.tsx";
+import { Following } from "@/pages/Following.tsx";
 
-import { store } from "./redux/store.ts";
-import "./index.css";
-import { AuthGuard } from "./components/AuthGuard/index.tsx";
+import { store } from "@/redux/store";
+import "@/index.css";
 
 const router = createBrowserRouter([
   {

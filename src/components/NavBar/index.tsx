@@ -14,10 +14,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { NavProfile } from "@/components/NavProfile";
 
 import { selectCurrent, selectIsAuthenticated } from "@/redux/user/selectors";
-import { NavProfile } from "../NavProfile";
 
 const data = [
   {

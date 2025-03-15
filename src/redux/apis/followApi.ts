@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api } from "@/redux/apis/api";
 
 export const followApi = api.injectEndpoints({
   endpoints: (builder) => ({

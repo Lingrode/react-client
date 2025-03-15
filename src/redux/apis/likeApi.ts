@@ -1,5 +1,5 @@
 import { Like } from "@/types";
-import { api } from "./api";
+import { api } from "@/redux/apis/api";
 
 export const likeApi = api.injectEndpoints({
   endpoints: (builder) => ({

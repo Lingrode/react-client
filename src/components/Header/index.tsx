@@ -2,10 +2,13 @@ import { Link } from "react-router";
 import { SidebarIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 
-import { Button } from "../ui/button";
-import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
-import { useSidebar } from "../ui/sidebar";
-import { ThemeToggle } from "../ThemeToggle";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { useSidebar } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { selectIsAuthenticated } from "@/redux/user/selectors";
 

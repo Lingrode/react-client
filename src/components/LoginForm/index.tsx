@@ -11,11 +11,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { ErrorMessage } from "../ErrorMessage";
-import { LoadingSpinner } from "../Loader";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ErrorMessage } from "@/components/ErrorMessage";
+import { LoadingSpinner } from "@/components/Loader";
 import { hasErrorField } from "@/utils/hasErrorField";
 
 import { useLazyCurrentQuery, useLoginMutation } from "@/redux/apis/userApi";

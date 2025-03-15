@@ -1,5 +1,5 @@
 import { Comment } from "@/types";
-import { api } from "./api";
+import { api } from "@/redux/apis/api";
 
 export const commentApi = api.injectEndpoints({
   endpoints: (builder) => ({

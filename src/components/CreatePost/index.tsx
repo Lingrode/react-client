@@ -10,10 +10,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
-import { ErrorMessage } from "../ErrorMessage";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { ErrorMessage } from "@/components/ErrorMessage";
 
 import {
   useCreatePostMutation,

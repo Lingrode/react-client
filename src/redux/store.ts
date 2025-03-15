@@ -1,7 +1,7 @@
 import { api } from "@/redux/apis/api";
 import { configureStore } from "@reduxjs/toolkit";
 import { listenerMiddleware } from "@/middlewares/auth";
-import userSlice from "./user/slice";
+import userSlice from "@/redux/user/slice";
 
 export const store = configureStore({
   reducer: {
