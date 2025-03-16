@@ -89,7 +89,11 @@ export const PostCard = ({
         await likePost({ postId: id }).unwrap();
       }
 
-      await refetchPosts();
+      if (cardFor === "post") {
+        await refetchPosts();
+      } else {
+        await triggerGetPostById(id).unwrap();
+      }
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);
