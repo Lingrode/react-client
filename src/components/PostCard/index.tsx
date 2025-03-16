@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react";
+import { Heart, MessageSquare, Trash2 } from "lucide-react";
 
 import {
   Card,
@@ -81,6 +81,24 @@ export const PostCard = ({
     }
   };
 
+  const handleClick = async () => {
+    try {
+      if (likedByUser) {
+        await unlikePost(id).unwrap();
+      } else {
+        await likePost({ postId: id }).unwrap();
+      }
+
+      await refetchPosts();
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
+    }
+  };
+
   const handleDeletePost = async () => {
     try {
       switch (cardFor) {
@@ -134,10 +152,12 @@ export const PostCard = ({
       {cardFor !== "comment" && (
         <CardFooter className="gap-3">
           <div className="flex gap-5 items-center">
-            <div>
+            <div onClick={handleClick}>
               <MetaInfo
                 count={likesCount}
-                Icon={likedByUser ? <ThumbsDown /> : <ThumbsUp />}
+                Icon={
+                  likedByUser ? <Heart fill="red" stroke="red" /> : <Heart />
+                }
               />
             </div>
             <Link to={`/posts/${id}`}>
