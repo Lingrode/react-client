@@ -35,11 +35,11 @@ type Props = {
   content: string;
   commentId?: string;
   likesCount?: number;
-  commentsCount: number;
+  commentsCount?: number;
   createdAt?: Date;
   id?: string;
   cardFor: "comment" | "post" | "current-post";
-  likedByUser: boolean;
+  likedByUser?: boolean;
 };
 
 export const PostCard = ({
@@ -111,7 +111,7 @@ export const PostCard = ({
           navigate("/");
           break;
         case "comment":
-          await deleteComment(id).unwrap();
+          await deleteComment(commentId).unwrap();
           await refetchPosts();
           break;
         default:
