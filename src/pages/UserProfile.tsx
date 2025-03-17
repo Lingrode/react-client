@@ -41,6 +41,21 @@ export const UserProfile = () => {
     dispatch(resetUser());
   }, [dispatch]);
 
+  const handleFollow = async () => {
+    try {
+      if (id) {
+        if (data?.isFollowing) {
+          await unfollowUser(id).unwrap();
+        } else {
+          await followUser({ followingId: id }).unwrap();
+        }
+
+        await triggerGetUserByIdQuery(id);
+        await triggerCurrentQuery();
+      }
+    } catch (error) {}
+  };
+
   if (!data) return null;
 
   return (
@@ -57,13 +72,14 @@ export const UserProfile = () => {
             <Button
               variant={data?.isFollowing ? "outline" : "default"}
               className="mt-4"
+              onClick={handleFollow}
             >
-              {data?.isFollowing ? (
+              {data.isFollowing ? (
                 <UserMinus className="mr-2" />
               ) : (
                 <UserPlus className="mr-2" />
               )}
-              {data?.isFollowing ? "Отписаться" : "Подписаться"}
+              {data.isFollowing ? "Отписаться" : "Подписаться"}
             </Button>
           ) : (
             <Dialog>
