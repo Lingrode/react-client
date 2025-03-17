@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Pencil, UserMinus, UserPlus } from "lucide-react";
 
@@ -23,14 +22,14 @@ import {
   useLazyCurrentQuery,
   useLazyGetUserByIdQuery,
 } from "@/redux/apis/userApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectCurrent } from "@/redux/user/selectors";
 import { resetUser } from "@/redux/user/slice";
 
 export const UserProfile = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const currentUser = useSelector(selectCurrent);
+  const currentUser = useAppSelector(selectCurrent);
   const { data } = useGetUserByIdQuery(id ?? "");
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();

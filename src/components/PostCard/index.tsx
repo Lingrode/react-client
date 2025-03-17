@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { Heart, MessageSquare, Trash2 } from "lucide-react";
 
@@ -27,6 +26,7 @@ import {
 } from "@/redux/apis/postApi";
 import { selectCurrent } from "@/redux/user/selectors";
 import { hasErrorField } from "@/utils/hasErrorField";
+import { useAppSelector } from "@/redux/hooks";
 
 type Props = {
   avatarUrl: string;
@@ -63,7 +63,7 @@ export const PostCard = ({
   const [deleteComment, deleteCommentStatus] = useDeleteCommentMutation();
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const currentUser = useSelector(selectCurrent);
+  const currentUser = useAppSelector(selectCurrent);
 
   const refetchPosts = async () => {
     switch (cardFor) {

@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import { SidebarIcon } from "lucide-react";
-import { useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,9 +10,10 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { selectIsAuthenticated } from "@/redux/user/selectors";
+import { useAppSelector } from "@/redux/hooks";
 
 export const Header = () => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const { toggleSidebar } = useSidebar();
 
   return (

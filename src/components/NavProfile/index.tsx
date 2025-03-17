@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
@@ -22,11 +21,11 @@ import {
 
 import { selectCurrent } from "@/redux/user/selectors";
 import { logout } from "@/redux/user/slice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export const NavProfile = () => {
   const dispatch = useAppDispatch();
-  const current = useSelector(selectCurrent);
+  const current = useAppSelector(selectCurrent);
   const { isMobile } = useSidebar();
 
   if (!current) return null;

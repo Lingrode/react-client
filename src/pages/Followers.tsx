@@ -1,8 +1,9 @@
+import { Link } from "react-router";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@/components/User";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrent } from "@/redux/user/selectors";
-import { Link } from "react-router";
 
 export const Followers = () => {
   const currentUser = useAppSelector(selectCurrent);
@@ -12,7 +13,7 @@ export const Followers = () => {
   return currentUser.followers.length > 0 ? (
     <div className="gap-5 flex flex-col">
       {currentUser.followers.map((user) => (
-        <Link to={`/users/${user.followerId}`} key={user.follower.id}>
+        <Link to={`/users/${user.follower.id}`} key={user.follower.id}>
           <Card>
             <CardContent>
               <User
@@ -26,6 +27,6 @@ export const Followers = () => {
       ))}
     </div>
   ) : (
-    <h1>You don't have followers</h1>
+    <h1>You have no followers</h1>
   );
 };
