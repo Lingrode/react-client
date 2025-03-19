@@ -7,9 +7,15 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BASE_URL } from "@/constants";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { ProfileInfo } from "@/components/ProfileInfo";
 import { CountInfo } from "@/components/CountInfo";
+import { EditProfile } from "@/components/EditProfile";
 
 import { formatToClientDate } from "@/utils/formatToClientDate";
 
@@ -87,7 +93,10 @@ export const UserProfile = () => {
                   <Pencil className="mr-2" /> Редактировать
                 </Button>
               </DialogTrigger>
-              <DialogContent>{/* <EditProfile user={data} /> */}</DialogContent>
+              <DialogContent>
+                <DialogTitle>Edit Profile</DialogTitle>
+                <EditProfile user={data} />
+              </DialogContent>
             </Dialog>
           )}
         </Card>
