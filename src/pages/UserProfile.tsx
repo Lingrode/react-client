@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { Pencil, UserMinus, UserPlus } from "lucide-react";
 
+import { BASE_URL } from "@/constants";
+
 import { GoBackBtn } from "@/components/GoBackBtn";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BASE_URL } from "@/constants";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -89,9 +90,13 @@ export const UserProfile = () => {
     <>
       <GoBackBtn />
       <div className="flex gap-4 items-stretch">
-        <Card className="p-6 flex flex-col items-center text-center shadow-lg w-full md:w-1/3">
-          <Avatar>
-            <AvatarImage src={`${BASE_URL}${data.avatarUrl}`} alt={data.name} />
+        <Card className="p-6 flex flex-col items-center text-center shadow-lg w-full md:w-1/2">
+          <Avatar className="size-70">
+            <AvatarImage
+              src={`${BASE_URL}${data.avatarUrl}`}
+              alt={data.name}
+              className="object-cover"
+            />
             <AvatarFallback>{data.name}</AvatarFallback>
           </Avatar>
           <h2 className="text-2xl font-bold mt-4">{data.name}</h2>
@@ -127,7 +132,7 @@ export const UserProfile = () => {
             </Dialog>
           )}
         </Card>
-        <Card className="col-span-2 p-6 shadow-lg">
+        <Card className="col-span-2 p-6 shadow-lg w-full">
           <CardHeader>
             <h3 className="text-xl font-semibold">Info</h3>
           </CardHeader>
