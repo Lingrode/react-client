@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { Pencil, UserMinus, UserPlus } from "lucide-react";
 
 import { GoBackBtn } from "@/components/GoBackBtn";
@@ -61,9 +61,9 @@ export const UserProfile = () => {
         await triggerGetUserByIdQuery(id);
         await triggerCurrentQuery();
       }
-    } catch (error) {
-      if (hasErrorField(error)) {
-        setError(error.data.error);
+    } catch (err) {
+      if (hasErrorField(err)) {
+        setError(err.data.error);
       }
     }
   };
@@ -75,7 +75,10 @@ export const UserProfile = () => {
         await triggerCurrentQuery();
         setIsEditOpen(false);
       }
-    } catch (error) {
+    } catch (err) {
+      if (hasErrorField(err)) {
+        setError(err.data.error);
+      }
       console.log(error);
     }
   };
@@ -103,7 +106,7 @@ export const UserProfile = () => {
               ) : (
                 <UserPlus className="mr-2" />
               )}
-              {data.isFollowing ? "Отписаться" : "Подписаться"}
+              {data.isFollowing ? "Unfollow" : "Follow"}
             </Button>
           ) : (
             <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
@@ -117,7 +120,7 @@ export const UserProfile = () => {
                   Edit Profile
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent aria-describedby="edit-profile">
                 <DialogTitle>Edit Profile</DialogTitle>
                 <EditProfile user={data} onClose={handleClose} />
               </DialogContent>
@@ -126,26 +129,30 @@ export const UserProfile = () => {
         </Card>
         <Card className="col-span-2 p-6 shadow-lg">
           <CardHeader>
-            <h3 className="text-xl font-semibold">Информация</h3>
+            <h3 className="text-xl font-semibold">Info</h3>
           </CardHeader>
           <CardContent className="space-y-4">
-            <ProfileInfo title="📧 Почта:" info={data.email} />
+            <ProfileInfo title="📧 E-mail:" info={data.email} />
             <ProfileInfo
-              title="📍 Местоположение:"
-              info={data.location || "Не указано"}
+              title="📍 Location:"
+              info={data.location || "Unknown"}
             />
             <ProfileInfo
-              title="🎂 Дата рождения:"
+              title="🎂 Date of birth:"
               info={formatToClientDate(data.dateOfBirth)}
             />
             <ProfileInfo
-              title="ℹ️ Обо мне:"
-              info={data.bio || "Нет информации"}
+              title="ℹ️ About me:"
+              info={data.bio || "No information"}
             />
 
             <div className="flex gap-4">
-              <CountInfo count={data.followers.length} title="Подписчики" />
-              <CountInfo count={data.following.length} title="Подписки" />
+              <Link to="/followers">
+                <CountInfo count={data.followers.length} title="Followers" />
+              </Link>
+              <Link to="/following">
+                <CountInfo count={data.following.length} title="Followings" />
+              </Link>
             </div>
           </CardContent>
         </Card>

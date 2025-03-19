@@ -46,6 +46,7 @@ export const RegisterForm = ({ setSelected }: Props) => {
     },
   });
 
+  const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
   const [error, setError] = useState("");
 
@@ -56,6 +57,7 @@ export const RegisterForm = ({ setSelected }: Props) => {
       await register(values).unwrap();
       setSelected("login");
       form.reset();
+      navigate("/");
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);
