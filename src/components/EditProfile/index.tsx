@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { User } from "@/types";
 import { useUpdateUserMutation } from "@/redux/apis/userApi";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ErrorMessage";
@@ -17,11 +17,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+
 import { BASE_URL } from "@/constants";
+import { User } from "@/types";
+import { hasErrorField } from "@/utils/hasErrorField";
 
 type Props = {
-  // isOpen: boolean;
-  // onClose: () => void;
+  onClose: () => void;
   user?: User;
 };
 
@@ -38,10 +40,11 @@ const profileSchema = z.object({
   location: z.string().optional(),
 });
 
-export const EditProfile = ({ isOpen, onClose, user }: Props) => {
+export const EditProfile = ({ onClose, user }: Props) => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { id } = useParams<{ id: string }>();
 
   const form = useForm<z.infer<typeof profileSchema>>({
     reValidateMode: "onBlur",
@@ -58,17 +61,61 @@ export const EditProfile = ({ isOpen, onClose, user }: Props) => {
     },
   });
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files !== null) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const onSubmit = async (data: z.infer<typeof profileSchema>) => {
+    if (id) {
+      try {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        if (data.dateOfBirth) {
+          formData.append(
+            "dateOfBirth",
+            new Date(data.dateOfBirth).toISOString()
+          );
+        }
+        if (data.bio) {
+          formData.append("bio", data.bio);
+        }
+        if (data.location) {
+          formData.append("location", data.location);
+        }
+        if (selectedFile) {
+          formData.append("avatar", selectedFile);
+        }
+
+        await updateUser({ userData: formData, id }).unwrap();
+        onClose();
+      } catch (error) {
+        if (hasErrorField(error)) {
+          setError(error.data.error);
+        }
+      }
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4">
-        {/* <div className="flex flex-col items-center">
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <div className="flex flex-col items-center">
           <Avatar className="w-24 h-24">
-            <AvatarImage src={`${BASE_URL}${user.avatarUrl}`} alt={user.name} />
-            <AvatarFallback>{user.name[0]}</AvatarFallback>
+            <AvatarImage
+              src={`${BASE_URL}${user?.avatarUrl}`}
+              alt={user?.name}
+            />
+            <AvatarFallback>{user?.name ? user.name[0] : ""}</AvatarFallback>
           </Avatar>
-          <FormLabel className="mt-2">Изменить фото</FormLabel>
+          <FormLabel className="mt-2">Change avatar</FormLabel>
           <Input type="file" onChange={handleFileChange} />
-        </div> */}
+        </div>
 
         <FormField
           control={form.control}

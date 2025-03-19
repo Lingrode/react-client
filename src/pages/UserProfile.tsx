@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Pencil, UserMinus, UserPlus } from "lucide-react";
 
@@ -18,6 +18,7 @@ import { CountInfo } from "@/components/CountInfo";
 import { EditProfile } from "@/components/EditProfile";
 
 import { formatToClientDate } from "@/utils/formatToClientDate";
+import { hasErrorField } from "@/utils/hasErrorField";
 
 import {
   useFollowUserMutation,
@@ -41,6 +42,8 @@ export const UserProfile = () => {
   const [unfollowUser] = useUnfollowUserMutation();
   const [triggerGetUserByIdQuery] = useLazyGetUserByIdQuery();
   const [triggerCurrentQuery] = useLazyCurrentQuery();
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     dispatch(resetUser());
@@ -58,7 +61,23 @@ export const UserProfile = () => {
         await triggerGetUserByIdQuery(id);
         await triggerCurrentQuery();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      }
+    }
+  };
+
+  const handleClose = async () => {
+    try {
+      if (id) {
+        await triggerGetUserByIdQuery(id);
+        await triggerCurrentQuery();
+        setIsEditOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!data) return null;
@@ -87,15 +106,20 @@ export const UserProfile = () => {
               {data.isFollowing ? "Отписаться" : "Подписаться"}
             </Button>
           ) : (
-            <Dialog>
+            <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
               <DialogTrigger asChild>
-                <Button variant="secondary" className="mt-4">
-                  <Pencil className="mr-2" /> Редактировать
+                <Button
+                  variant="secondary"
+                  className="mt-4"
+                  onClick={() => setIsEditOpen(true)}
+                >
+                  <Pencil className="mr-2" />
+                  Edit Profile
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogTitle>Edit Profile</DialogTitle>
-                <EditProfile user={data} />
+                <EditProfile user={data} onClose={handleClose} />
               </DialogContent>
             </Dialog>
           )}
