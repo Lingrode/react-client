@@ -106,15 +106,20 @@ export const EditProfile = ({ onClose, user }: Props) => {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="flex flex-col items-center">
-          <Avatar className="w-24 h-24">
+          <Avatar className="w-24 h-24 size-50">
             <AvatarImage
               src={`${BASE_URL}${user?.avatarUrl}`}
               alt={user?.name}
+              className="object-cover"
             />
             <AvatarFallback>{user?.name ? user.name[0] : ""}</AvatarFallback>
           </Avatar>
-          <FormLabel className="mt-2">Change avatar</FormLabel>
-          <Input type="file" onChange={handleFileChange} />
+          <FormLabel className="mt-5 mb-2 self-start">Change avatar</FormLabel>
+          <Input
+            type="file"
+            onChange={handleFileChange}
+            className="p-0 pe-3 file:me-3 file:border-0 file:border-e cursor-pointer"
+          />
         </div>
 
         <FormField

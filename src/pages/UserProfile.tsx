@@ -91,7 +91,7 @@ export const UserProfile = () => {
       <GoBackBtn />
       <div className="flex gap-4 items-stretch">
         <Card className="p-6 flex flex-col items-center text-center shadow-lg w-full md:w-1/2">
-          <Avatar className="size-70">
+          <Avatar className="size-80 rounded-[20px]">
             <AvatarImage
               src={`${BASE_URL}${data.avatarUrl}`}
               alt={data.name}
